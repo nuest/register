@@ -15,6 +15,12 @@ render: version
 stats: version
 	R -q -e "codecheck::register_update_stats();"
 
+cert:
+ifndef CERT_ID
+	$(error Usage: make cert CERT_ID=2024-017)
+endif
+	R -q -e "codecheck::register_render_cert('$(CERT_ID)');"
+
 render_latest: clean
 	R -q -e "register = read.csv('register.csv', as.is = TRUE, comment.char = '#'); codecheck::register_check(from = nrow(register), to = nrow(register) - 2);"
 
