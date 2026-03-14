@@ -13,15 +13,16 @@ jobs:
       register: ${{ steps.filter.outputs.register }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Check
         # https://github.com/dorny/paths-filter
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@v4
         id: filter
         with:
           filters: |
             register:
               - 'register.csv'
+              - 'venues.csv'
   render:
     needs: changes
     if: ${{ needs.changes.outputs.register == 'true' }}
@@ -30,7 +31,7 @@ jobs:
       image: codecheckers/register:latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - run: git config --system --add safe.directory /__w/register/register
       - name: Rate before
         run: |
@@ -49,7 +50,7 @@ jobs:
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       - name: Update register
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_author: CODECHECK bot <daniel.nuest@tu-dresden.de>
           commit_message: Update register renderings

@@ -13,7 +13,7 @@ jobs:
       image: codecheckers/register:latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - run: git config --system --add safe.directory /__w/register/register
       - name: Rate before
         run: |
